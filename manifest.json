@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "ISS Controls for SpaceX Simulator",
+    "version": "1.0",
+    "description": "Automatic controls for the SpaceX ISS docking simulator.",
+    "permissions": [
+        "activeTab"
+    ],
+    "icons": {
+        "48": "icons/iss-48.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/iss-32.png",
+        "default_title": "SpaceX ISS Controls",
+        "default_popup": "popup/run_controls.html"
+    }
+}

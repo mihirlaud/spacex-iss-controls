@@ -1,0 +1,29 @@
+html, body {
+    width: 100px;
+}
+
+p {
+    font-family: sans-serif;
+}
+  
+.hidden {
+    display: none;
+}
+  
+.button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+  
+.controls:hover {
+    background-color: #CFF2F2;
+}
+  
+.controls {
+    font-family: sans-serif;
+    background-color: #E5F2F2;
+}
+  
