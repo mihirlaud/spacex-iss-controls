@@ -10,3 +10,4 @@ Still WIP, accuracy about 70%, and it takes about 5 minutes to fully dock.
 - Decrease time taken
 - Abide by all existing safety rules and guidelines
 - Add option for motion profiling route for arc motion instead of only rectilinear
+- Expand past Firefox Extension to other browsers
