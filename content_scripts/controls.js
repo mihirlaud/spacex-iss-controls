@@ -76,30 +76,35 @@
     var z_align = false;
     function z_dock() {
         var prev_z = 0;
+        var z_count = 0;
         var z_timer = setInterval(function () {
             let z_str = document.getElementById("z-range").childNodes[1].textContent;
             let z = parseFloat(z_str.substring(0, z_str.length - 1));
             
-            if (Math.abs(z) <= 0.0) {
-                xyzPIDCommand(0, "z");
-                z_align = true;
-                var maintain_z = setInterval(function () {
-                    let z_str = document.getElementById("z-range").childNodes[1].textContent;
-                    let z = parseFloat(z_str.substring(0, z_str.length - 1));
-                    if (z >= 0.1) {
-                        document.getElementById("translate-down-button").click();
-                    } else if (z <= -0.1) {
-                        document.getElementById("translate-up-button").click();
-                    }
+            if (Math.abs(z) <= 0.1) {
+                z_count += 1;
+                if (z_count > 20) {
+                    xyzPIDCommand(0, "z");
+                    z_align = true;
+                    var maintain_z = setInterval(function () {
+                        let z_str = document.getElementById("z-range").childNodes[1].textContent;
+                        let z = parseFloat(z_str.substring(0, z_str.length - 1));
+                        if (z >= 0.1) {
+                            document.getElementById("translate-down-button").click();
+                        } else if (z <= -0.1) {
+                            document.getElementById("translate-up-button").click();
+                        }
 
-                    if (document.getElementById("success").style.visibility != "hidden" || document.getElementById("fail").style.visibility != "hidden") {
-                        clearInterval(maintain_z);
-                    }
-                }, 500);
-                clearInterval(z_timer);
+                        if (document.getElementById("success").style.visibility != "hidden" || document.getElementById("fail").style.visibility != "hidden") {
+                            clearInterval(maintain_z);
+                        }
+                    }, 1000);
+                    clearInterval(z_timer);
+                }
             } else {
-                const kP = 0.5;
-                const kD = 1.2;
+                z_count = 0;
+                const kP = 0.8;
+                const kD = 0.6;
 
                 let p = kP * z;
                 let d = kD * (z - prev_z);
@@ -109,7 +114,7 @@
                 } else if (com < -1) {
                     com = -1;
                 }
-                com = Math.round(com * 10) / 50;
+                com = Math.round(com * 10) / 20;
                 xyzPIDCommand(com, "z");
                 prev_z = z;
             }
@@ -119,30 +124,35 @@
     var y_align = false;
     function y_dock() {
         var prev_y = 0;
+        var y_count = 0;
         var y_timer = setInterval(function () {
             let y_str = document.getElementById("y-range").childNodes[1].textContent;
             let y = parseFloat(y_str.substring(0, y_str.length - 1));
             
-            if (Math.abs(y) <= 0.0) {
-                xyzPIDCommand(0, "y");
-                y_align = true;
-                var maintain_y = setInterval(function () {
-                    let y_str = document.getElementById("y-range").childNodes[1].textContent;
-                    let y = parseFloat(y_str.substring(0, y_str.length - 1));
-                    if (y >= 0.1) {
-                        document.getElementById("translate-left-button").click();
-                    } else if (y <= -0.1) {
-                        document.getElementById("translate-right-button").click();
-                    }
+            if (Math.abs(y) <= 0.1) {
+                y_count += 1;
+                if (y_count > 20) {
+                    xyzPIDCommand(0, "y");
+                    y_align = true;
+                    var maintain_y = setInterval(function () {
+                        let y_str = document.getElementById("y-range").childNodes[1].textContent;
+                        let y = parseFloat(y_str.substring(0, y_str.length - 1));
+                        if (y >= 0.1) {
+                            document.getElementById("translate-left-button").click();
+                        } else if (y <= -0.1) {
+                            document.getElementById("translate-right-button").click();
+                        }
 
-                    if (document.getElementById("success").style.visibility != "hidden" || document.getElementById("fail").style.visibility != "hidden") {
-                        clearInterval(maintain_y);
-                    }
-                }, 500);
-                clearInterval(y_timer);
+                        if (document.getElementById("success").style.visibility != "hidden" || document.getElementById("fail").style.visibility != "hidden") {
+                            clearInterval(maintain_y);
+                        }
+                    }, 1000);
+                    clearInterval(y_timer);
+                }
             } else {
-                const kP = 0.5;
-                const kD = 1.2;
+                y_count = 0;
+                const kP = 0.8;
+                const kD = 0.6;
 
                 let p = kP * y;
                 let d = kD * (y - prev_y);
@@ -152,7 +162,7 @@
                 } else if (com < -1) {
                     com = -1;
                 }
-                com = Math.round(com * 10) / 50;
+                com = Math.round(com * 10) / 20;
                 xyzPIDCommand(com, "y");
                 prev_y = y;
             }
@@ -182,7 +192,7 @@
                     if (document.getElementById("success").style.visibility != "hidden" || document.getElementById("fail").style.visibility != "hidden") {
                         clearInterval(maintain_x);
                     }
-                }, 500);
+                }, 1000);
                 clearInterval(x_timer);
             } else {
                 const kP = 0.5;
@@ -196,7 +206,7 @@
                 } else if (com < -1) {
                     com = -1;
                 }
-                com = Math.round(com * 10) / 50;
+                com = Math.round(com * 10) / 20;
                 xyzPIDCommand(com, "x");
                 prev_x = x;
             }
